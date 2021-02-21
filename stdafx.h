@@ -2,10 +2,10 @@
 #define __STDAFX_H__
 
 #pragma once
-
-#ifdef WIN32
-#define WIN32_LEAN_AND_MEAN		// 从 Windows 头中排除极少使用的资料
-#endif
+//
+//#ifdef WIN32
+//#define WIN32_LEAN_AND_MEAN		// 从 Windows 头中排除极少使用的资料
+//#endif
 
 #include <stdio.h>
 

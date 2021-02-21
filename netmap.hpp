@@ -107,10 +107,10 @@ public:
 
    void close();
 
-   void handle_local_read(const boost::system::error_code& err, 
+   void handle_local_read(const boost::system::error_code& err,
       int bytes_transferred);
 
-   void handle_local_write(boost::shared_ptr<std::vector<char> > buffer, 
+   void handle_local_write(boost::shared_ptr<std::vector<char> > buffer,
       size_t bytes_transferred, const boost::system::error_code& error);
 
    void local_write(const char* buffer, int buffer_length);
@@ -118,10 +118,10 @@ public:
    //////////////////////////////////////////////////////////////////////////
    void remote_connect(const boost::system::error_code& err);
 
-   void handle_remote_read(const boost::system::error_code& err, 
+   void handle_remote_read(const boost::system::error_code& err,
       int bytes_transferred);
 
-   void handle_remote_write(boost::shared_ptr<std::vector<char> > buffer, 
+   void handle_remote_write(boost::shared_ptr<std::vector<char> > buffer,
       size_t bytes_transferred, const boost::system::error_code& error);
 
    void remote_write(const char* buffer, int buffer_length);
@@ -147,7 +147,7 @@ class netmap_server
    : public boost::noncopyable
 {
 public:
-   netmap_server(boost::asio::io_service& io_service, 
+   netmap_server(boost::asio::io_service& io_service,
       short server_port, tcp::endpoint& ep, const std::string& dump_file);
    ~netmap_server(void) {}
 

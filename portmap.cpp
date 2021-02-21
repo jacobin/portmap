@@ -7,20 +7,20 @@ struct configure
 {
 public:
    std::string remote_host;
-   std::string dump_file;  // Î´ÊµÏÖµÄ¹¦ÄÜ.
+   std::string dump_file;  // æœªå®ç°çš„åŠŸèƒ½.
    int server_port;
-   int is_auto_connect;    // Î´ÊµÏÖµÄ¹¦ÄÜ.
-   int time_out;           // Î´ÊµÏÖµÄ¹¦ÄÜ.
+   int is_auto_connect;    // æœªå®ç°çš„åŠŸèƒ½.
+   int time_out;           // æœªå®ç°çš„åŠŸèƒ½.
 
 public:
-   void load_config_file() 
+   void load_config_file()
    {
       boost::program_options::options_description config("Configuration");
       config.add_options()
-         ("auto connect", boost::program_options::value<int>(&is_auto_connect)->default_value(0), "¶Ï¿ª×Ô¶¯ÖØÁ¬, Î´ÊµÏÖ.")
-         ("time out", boost::program_options::value<int>(&time_out)->default_value(0), "³¬Ê±Ê±¼ä, Î´ÊµÏÖ.")
-         ("server port", boost::program_options::value<int>(&server_port)->default_value(4322), "±¾µØ·şÎñ¶Ë¿Ú, Ä¬ÈÏ4322.")
-         ("remote host", boost::program_options::value<std::string>(&remote_host)->default_value("127.0.0.1:2080"), "Ô¶³ÌÖ÷»úµÄhost:port.")
+         ("auto connect", boost::program_options::value<int>(&is_auto_connect)->default_value(0), "æ–­å¼€è‡ªåŠ¨é‡è¿, æœªå®ç°.")
+         ("time out", boost::program_options::value<int>(&time_out)->default_value(0), "è¶…æ—¶æ—¶é—´, æœªå®ç°.")
+         ("server port", boost::program_options::value<int>(&server_port)->default_value(4322), "æœ¬åœ°æœåŠ¡ç«¯å£, é»˜è®¤4322.")
+         ("remote host", boost::program_options::value<std::string>(&remote_host)->default_value("127.0.0.1:2080"), "è¿œç¨‹ä¸»æœºçš„host:port.")
          ;
 
       std::ifstream ifs("conf.cfg");
@@ -40,7 +40,7 @@ public:
 
 int main(int argc, char* argv[])
 {
-   try 
+   try
    {
       configure cfg;
       std::string host;
@@ -50,32 +50,32 @@ int main(int argc, char* argv[])
 
       boost::regex expression("^([^:]*)[:]([^//]*)(.*)$");
 
-      // ¼ÓÔØÅäÖÃÎÄ¼ş.
+      // åŠ è½½é…ç½®æ–‡ä»¶.
       cfg.load_config_file();
 
-      // µÃµ½Ô´url.
+      // å¾—åˆ°æºurl.
       url = cfg.remote_host;
 
       std::string::const_iterator start, end;
 
       start = cfg.remote_host.begin();
       end = cfg.remote_host.end();
-      boost::match_results<std::string::const_iterator> what; 
-      boost::match_flag_type flags = boost::match_default; 
+      boost::match_results<std::string::const_iterator> what;
+      boost::match_flag_type flags = boost::match_default;
       if (regex_search(start, end, what, expression, flags)) {
          host = std::string(what[1]);
          port = std::string(what[2]);
       }
 
       if (host.empty() || port.empty()) {
-         std::cout << "´íÎó: ±ØĞëÉèÖÃÔ¶³ÌÖ÷»úipºÍport!\n";
+         std::cout << "é”™è¯¯: å¿…é¡»è®¾ç½®è¿œç¨‹ä¸»æœºipå’Œport!\n";
          return -1;
       }
 
-      tcp::endpoint ep(boost::asio::ip::address::from_string(host), 
+      tcp::endpoint ep(boost::asio::ip::address::from_string(host),
          atoi(port.c_str()));
 
-      // Ò»¸ö×ª·¢·şÎñÆ÷.
+      // ä¸€ä¸ªè½¬å‘æœåŠ¡å™¨.
       netmap_server server(io_service, cfg.server_port, ep, cfg.dump_file);
 
       io_service.run();
